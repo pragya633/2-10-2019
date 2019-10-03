@@ -1,6 +1,8 @@
 package com.cg.ibs.cardmanagement.service;
 
 import java.math.BigInteger;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import com.cg.ibs.cardmanagement.cardbean.CaseIdBean;
@@ -9,6 +11,7 @@ import com.cg.ibs.cardmanagement.dao.DaoClass;
 import com.cg.ibs.common.bean.TransactionBean;
 
 public class CustomerServiceImpl implements CustomerService{
+	
 	
 	long caseIdGenTwo=0;
 	String caseIdGenOne=" ";
@@ -26,15 +29,16 @@ public class CustomerServiceImpl implements CustomerService{
 			caseIdGenTwo++;
 			return caseIdTotal;
 			}
-	 
-	 
-	@Override
+	 @Override
 	public void applyNewDebitCard() {
 		// TODO Auto-generated method stub
 		caseIdGenOne="ANDC";
-		caseIdObj.setCaseIdTotal(customService.addToQueryTable(caseIdGenOne));
+		Date timestamp = new Date ("dd-MM-yyyy HH:mm:ss");
 		
-		 customerDao.newDebitCard(caseIdObj);
+		caseIdObj.setCaseIdTotal(customService.addToQueryTable(caseIdGenOne));
+		caseIdObj.setCaseTimeStamp(timestamp);
+		caseIdObj.setStatusOfQuery("Pending");
+		customerDao.newDebitCard(caseIdObj);
 		     
 		
 		
@@ -67,6 +71,8 @@ public class CustomerServiceImpl implements CustomerService{
 	@Override
 	public void requestDebitCardUpgrade(BigInteger debitCardNumber) {
 		// TODO Auto-generated method stub
+		
+		
 		
 	}
 	@Override
